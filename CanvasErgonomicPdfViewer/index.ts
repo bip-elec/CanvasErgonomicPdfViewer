@@ -1,7 +1,7 @@
 import "./promisePolyfill";
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
-import pdfjsWorker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
+
 
 
 
@@ -42,12 +42,7 @@ export class CanvasErgonomicPdfViewer implements ComponentFramework.StandardCont
     
     const version = m.version || "5.4.530";
     
-    if (typeof pdfjsWorker === 'string') {
-      m.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-    } else {
-      const cdnUrl = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${version}/pdf.worker.min.mjs`;
-      m.GlobalWorkerOptions.workerSrc = cdnUrl;
-    }
+
 
     this.pdfjs = m;
     return this.pdfjs;
