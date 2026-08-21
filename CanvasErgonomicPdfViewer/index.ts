@@ -314,7 +314,10 @@ public destroy(): void {
       if (token !== this.renderToken) return;
 
       const pdfjsLib = await this.getPdfJs();
-      const loadingTask = pdfjsLib.getDocument({ data: bytes });
+      const loadingTask = pdfjsLib.getDocument({
+          data: bytes,
+          disableWorker: true
+      });
       const doc = await loadingTask.promise;
 
       if (token !== this.renderToken) return;
