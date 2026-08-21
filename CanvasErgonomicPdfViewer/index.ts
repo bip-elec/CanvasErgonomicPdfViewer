@@ -1,15 +1,5 @@
-
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
-import { WorkerMessageHandler } from "pdfjs-dist/legacy/build/pdf.worker.js";
-
-(window as unknown as {
-    pdfjsWorker?: {
-        WorkerMessageHandler: typeof WorkerMessageHandler;
-    };
-}).pdfjsWorker = {
-    WorkerMessageHandler
-};
 
 const BUILD = "PDF_2026-01-29_FINAL";
 
