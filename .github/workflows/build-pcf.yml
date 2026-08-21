@@ -1,0 +1,50 @@
+name: Build PDF Viewer PCF
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install dependencies
+        shell: pwsh
+        run: |
+          npm install
+
+      - name: Build PCF
+        shell: pwsh
+        run: |
+          npm run build
+
+      - name: Build solution
+        shell: pwsh
+        run: |
+          dotnet build CanvasErgonomicPdfViewerSolution/CanvasErgonomicPdfViewerSolution.cdsproj --configuration Release
+
+      - name: Show generated files
+        shell: pwsh
+        run: |
+          Get-ChildItem -Path CanvasErgonomicPdfViewerSolution -Recurse -Filter "*.zip"
+
+      - name: Upload solution
+        uses: actions/upload-artifact@v4
+        with:
+          name: CanvasErgonomicPdfViewer-Patched
+          path: |
+            CanvasErgonomicPdfViewerSolution/**/*.zip
+          if-no-files-found: error
