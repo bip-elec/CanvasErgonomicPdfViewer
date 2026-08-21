@@ -1,8 +1,8 @@
 
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
-
-
+import pdfjsWorker from "pdfjs-dist/legacy/build/pdf.worker.entry";
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 
 const BUILD = "PDF_2026-01-29_FINAL";
