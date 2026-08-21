@@ -26,6 +26,6 @@
     "typescript-eslint": "8.44.0"
   },
   "dependencies": {
-    "pdfjs-dist": "5.4.530"
+    "pdfjs-dist": "3.11.174"
   }
 }
