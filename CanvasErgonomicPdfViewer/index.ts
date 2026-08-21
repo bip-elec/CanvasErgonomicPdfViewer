@@ -1,6 +1,6 @@
-import "./promisePolyfill";
+
 import { IInputs, IOutputs } from "./generated/ManifestTypes";
-import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.js";
 
 
 
