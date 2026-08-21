@@ -2,6 +2,24 @@ import { IInputs, IOutputs } from "./generated/ManifestTypes";
 import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 
+// Polyfill Promise.withResolvers for Power Apps PCF runtime compatibility
+if (typeof (Promise as any).withResolvers !== "function") {
+    (Promise as any).withResolvers = function () {
+        let resolve: (value?: any) => void;
+        let reject: (reason?: any) => void;
+
+        const promise = new Promise((res, rej) => {
+            resolve = res;
+            reject = rej;
+        });
+
+        return {
+            promise,
+            resolve: resolve!,
+            reject: reject!
+        };
+    };
+}
 const BUILD = "PDF_2026-01-29_FINAL";
 
 interface PDFDocumentProxy {
