@@ -31,22 +31,14 @@ interface PdfJsModule {
 export class CanvasErgonomicPdfViewer implements ComponentFramework.StandardControl<IInputs, IOutputs> {
   private pdfjs: PdfJsModule | null = null;
 
-  private async getPdfJs(): Promise<PdfJsModule> {
+private async getPdfJs(): Promise<PdfJsModule> {
     if (this.pdfjs) return this.pdfjs;
 
     const m = pdfjsLib as unknown as PdfJsModule;
-    
-    if (!m.GlobalWorkerOptions) {
-      m.GlobalWorkerOptions = { workerSrc: "" };
-    }
-    
-    const version = m.version || "5.4.530";
-    
-
 
     this.pdfjs = m;
     return this.pdfjs;
-  }
+}
 
   private host!: HTMLDivElement;
   private root!: HTMLDivElement;
