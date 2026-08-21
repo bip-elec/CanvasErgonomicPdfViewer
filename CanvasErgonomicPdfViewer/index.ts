@@ -3,8 +3,20 @@ import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf";
 import pdfjsWorker from "pdfjs-dist/legacy/build/pdf.worker.mjs";
 
 // Polyfill Promise.withResolvers for Power Apps PCF runtime compatibility
-if (typeof Promise.withResolvers !== "function") {
-    Promise.withResolvers = function <T>() {
+interface PromiseWithResolvers<T> {
+    promise: Promise<T>;
+    resolve: (value: T | PromiseLike<T>) => void;
+    reject: (reason?: unknown) => void;
+}
+
+interface PromiseConstructorWithResolvers extends PromiseConstructor {
+    withResolvers?: <T>() => PromiseWithResolvers<T>;
+}
+
+const PromiseCompat = Promise as PromiseConstructorWithResolvers;
+
+if (typeof PromiseCompat.withResolvers !== "function") {
+    PromiseCompat.withResolvers = function <T>(): PromiseWithResolvers<T> {
         let resolvePromise!: (value: T | PromiseLike<T>) => void;
         let rejectPromise!: (reason?: unknown) => void;
 
